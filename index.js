@@ -50,17 +50,10 @@ exports.handler = function(event, context, callback) {
                 next);
         },
         function transform(response, next) {
-            gm(response.Body).size(function(err, size) {
-                // Infer the scaling factor to avoid stretching the image unnaturally.
-                let scalingFactor = Math.min(
-                    MAX_WIDTH / size.width,
-                    MAX_HEIGHT / size.height,
-                );
-                let width = scalingFactor * size.width;
-                let height = scalingFactor * size.height;
+            console.log(response);
+            gm(response.body).size(function(err, size) {
 
-                // Transform the image buffer in memory.
-                this.resize(width, height)
+                this.resize(500, 500)
                     .toBuffer(imageType, function(err, buffer) {
                         if (err) {
                             next(err);
